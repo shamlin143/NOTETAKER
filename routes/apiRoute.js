@@ -29,8 +29,6 @@ var router = express.Router();
 
             fs.readFile("db/db.json","utf8", function (err, data) {
                 if (err) throw err;
-                var i = 0;
-                var id = i + 1;
                 let newNote = {
                     "title": req.body.title,
                     'text': req.body.text,
