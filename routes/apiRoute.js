@@ -29,10 +29,11 @@ var router = express.Router();
 
             fs.readFile("db/db.json","utf8", function (err, data) {
                 if (err) throw err;
+                var notes = JSON.parse(data);
                 let newNote = {
                     "title": req.body.title,
                     'text': req.body.text,
-                    'id': id
+                    'id': notes.length,
                 }
 
                 var notes = JSON.parse(data);
@@ -68,11 +69,11 @@ var router = express.Router();
             fs.readFile("db/db.json", "utf-8", function(err, data){
             if (err) throw err;
             const notes = JSON.parse(data)
-            notes.splice(id, 1)
-            const jsonString = JSON.stringify(notes)
+            const filter_notes = notes.filter(note => note.id !== Number(req.params.id));
+            const jsonString = JSON.stringify(filter_notes)
             console.log(notes)
-            fs.readFile("db/db.json", function(err, data) {
-                if (err) throw err;
+            fs.writeFile ("db/db.json", jsonString, function(err) {
+                if (err) throw err;  
             
             res.json(notes)
             }
