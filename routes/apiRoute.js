@@ -25,15 +25,18 @@ var router = express.Router();
         });
 
         // Setup the /api/notes post 
-        router.post("/api/notes", function(req, res) {            
+        router.post("/api/notes", function(req, res) {  
 
             fs.readFile("db/db.json","utf8", function (err, data) {
                 if (err) throw err;
+                var i = 0;
+                var id = i + 1;
                 let newNote = {
                     "title": req.body.title,
                     'text': req.body.text,
-                    'id': 1
+                    'id': id
                 }
+
                 var notes = JSON.parse(data);
                 console.log(notes);
                 notes.push(newNote);
@@ -51,7 +54,7 @@ var router = express.Router();
             
             fs.readFile("db/db.json","utf8", (err, data) => {
                 let user_id = req.params.id;
-                if (err) throw err;
+                 if (err) throw err;
         
                 var notes = JSON.parse(data);
                 const result = notes.filter(id => id == user_id);
@@ -72,10 +75,11 @@ var router = express.Router();
             console.log(notes)
             fs.readFile("db/db.json", function(err, data) {
                 if (err) throw err;
-            })
+            
             res.json(notes)
-        })
-    });
+            }
+            )});
+         });
         
 
         module.exports = router;
